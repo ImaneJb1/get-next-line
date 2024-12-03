@@ -6,13 +6,11 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:00:48 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/03 14:13:15 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/03 14:50:31 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#define BUFFER_SIZE 5
 
 char    *get_leftover(char *buffer)
 {
@@ -50,6 +48,8 @@ char    *extract_line(char *buffer)
     while (buffer[i] && buffer[i] != '\n')
         i++;
     line = malloc(i * sizeof(char) + 1);
+    if(!line)
+        return(NULL);
     i = 0;
     while(buffer[i] && buffer[i] != '\n')
     {
@@ -67,6 +67,7 @@ char    *join_free(char *buffer, char *buf)
     char *join;
     join = ft_strjoin(buffer, buf);
     free(buffer);
+    free(buf);
     return(join);
 }
 
