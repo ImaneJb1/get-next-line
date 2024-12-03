@@ -6,7 +6,7 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:17:47 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/03 13:38:30 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:41:20 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	j = 0;
 	while (s1[j])
-	{
 		s3[i++] = s1[j++];
-	}
 	j = 0;
 	while (s2[j])
 		s3[i++] = s2[j++];

@@ -6,7 +6,7 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:00:48 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/03 14:50:31 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:15:51 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ char    *join_free(char *buffer, char *buf)
     char *join;
     join = ft_strjoin(buffer, buf);
     free(buffer);
+    buffer = NULL;
     free(buf);
+    buf = NULL;
     return(join);
 }
 
