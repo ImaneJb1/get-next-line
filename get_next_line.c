@@ -6,7 +6,7 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:00:48 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/03 20:15:51 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/06 22:21:01 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char    *get_leftover(char *buffer)
     while(buffer[i] && buffer[i] != '\n')
         i++;
     if(!buffer[i])
-        return(NULL);
+        return(free(buffer), NULL);
     len = ft_strlen(buffer) - i;
     leftover = malloc(len * sizeof(char) + 1);
     if(!leftover)
@@ -36,6 +36,7 @@ char    *get_leftover(char *buffer)
     while(j < len)
         leftover[j++] = buffer[i++];
     leftover[j] = 0;
+    free(buffer);
     return(leftover);
 }
 //get line with '\n'
@@ -47,7 +48,7 @@ char    *extract_line(char *buffer)
     i = 0;
     while (buffer[i] && buffer[i] != '\n')
         i++;
-    line = malloc(i * sizeof(char) + 1);
+    line = malloc(i * sizeof(char) + 2);
     if(!line)
         return(NULL);
     i = 0;
@@ -56,7 +57,8 @@ char    *extract_line(char *buffer)
         line[i] = buffer[i];
         i++;
     }
-    line[i++] = '\n';
+    if(buffer[i] == '\n')
+        line[i++] = '\n';
     line[i] = 0;
     return(line);
 }
@@ -68,8 +70,8 @@ char    *join_free(char *buffer, char *buf)
     join = ft_strjoin(buffer, buf);
     free(buffer);
     buffer = NULL;
-    free(buf);
-    buf = NULL;
+    // free(buf);
+    // buf = NULL;
     return(join);
 }
 
@@ -78,8 +80,8 @@ char    *read_buff(int fd, char * buffer)
 {
     char* buf;
     int readed;
-    
-    buf = malloc(BUFFER_SIZE * sizeof(char) + 1);
+    // printf("%d\n", BUFFER_SIZE);
+    buf = malloc((size_t)BUFFER_SIZE * sizeof(char) + 1);
     if(!buffer)
         buffer = ft_calloc(1, 1);
     readed = 1;
@@ -96,6 +98,7 @@ char    *read_buff(int fd, char * buffer)
         if(ft_strchr(buf, '\n'))
             break;
     }
+    free(buf);
     return(buffer);
 }
 
@@ -106,7 +109,7 @@ char *get_next_line(int fd)
 
     buffer = read_buff(fd, buffer);
     if(!buffer || *buffer == 0)
-        return(NULL);
+        return(free(buffer), NULL);
     line = extract_line(buffer);
     buffer = get_leftover(buffer);
     return(line);
