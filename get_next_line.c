@@ -79,6 +79,8 @@ char	*read_buff(int fd, char *buffer)
 	int		readed;
 
 	buf = malloc((size_t)BUFFER_SIZE * sizeof(char) + 1);
+	if (!buf)
+		return (NULL);
 	if (!buffer)
 		buffer = ft_calloc(1, 1);
 	readed = 1;
@@ -87,6 +89,7 @@ char	*read_buff(int fd, char *buffer)
 		readed = read(fd, buf, BUFFER_SIZE);
 		if (readed == -1)
 		{
+			free(buf);
 			free(buffer);
 			return (NULL);
 		}
@@ -104,6 +107,8 @@ char	*get_next_line(int fd)
 	static char *buffer;
 	char		*line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buffer = read_buff(fd, buffer);
 	if (!buffer || *buffer == 0)
 		return (free(buffer), NULL);
