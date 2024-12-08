@@ -47,6 +47,8 @@ char	*extract_line(char *buffer)
 	size_t		i;
 
 	i = 0;
+	if (!buffer[i])
+		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	line = malloc(sizeof(char) * (i + 1 + (buffer[i] == '\n')));
@@ -87,12 +89,14 @@ char	*read_buff(int fd, char *buffer)
 		return (NULL);
 	if (!buffer)
 		buffer = ft_calloc(1, 1);
+	if(buffer == NULL)
+		return(freer(&buf));
 	readed = 1;
 	while (readed > 0)
 	{
 		readed = read(fd, buf, BUFFER_SIZE);
 		if (readed == -1)
-			return(free(buf), NULL); 
+			return(free(buf), free(buffer), NULL); 
 		buf[readed] = 0;
 		buffer = join_free(buffer, buf);
 		if (ft_strchr(buf, '\n'))
@@ -106,11 +110,13 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	buffer = read_buff(fd, buffer);
-	if (!buffer || *buffer == 0)
-		return (free(buffer), NULL);
+	if (!buffer)
+		return (NULL);
+	if(*buffer == 0)
+		return(free(buffer), NULL);
 	line = extract_line(buffer);
 	if(!line)
 		return(free(buffer), NULL);
