@@ -33,7 +33,9 @@ size_t	ft_strlen(const char *str)
 	if (!str)
 		return (0);
 	while (str[len])
+	{
 		len++;
+	}
 	return (len);
 }
 
@@ -76,11 +78,4 @@ void	*ft_calloc(size_t count, size_t size)
 		i++;
 	}
 	return (arr);
-}
-
-char	*freer(char **buffer)
-{
-	free(*buffer);
-	*buffer = NULL;
-	return (NULL);
 }

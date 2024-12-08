@@ -28,5 +28,4 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strchr(const char *s, int c);
-char    *freer(char **buffer);
 #endif
