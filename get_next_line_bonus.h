@@ -6,7 +6,7 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 17:25:50 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/04 17:25:54 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:01:25 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
-#   define BUFFER_SIZE 15
+#  define BUFFER_SIZE 15
 # endif /* BUFFER_SIZE */
+
 # ifndef FD_SETSIZE
 #  define FD_SETSIZE 1024
 # endif
+
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>

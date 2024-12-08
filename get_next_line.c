@@ -6,7 +6,7 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:00:48 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/07 10:56:52 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/08 11:03:41 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*get_leftover(char *buffer)
 {
-	int		i;
-	int		j;
 	char	*leftover;
+	int		j;
+	int		i;
 	int		len;
 
 	j = 0;
@@ -39,11 +39,12 @@ char	*get_leftover(char *buffer)
 	free(buffer);
 	return (leftover);
 }
-// get line with '\n'
+
+//get line with '\n'
 char	*extract_line(char *buffer)
 {
-	int		i;
 	char	*line;
+	int		i;
 
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -62,7 +63,8 @@ char	*extract_line(char *buffer)
 	line[i] = 0;
 	return (line);
 }
-// join the leftover with the new readed line
+
+//join the leftover with the new readed line
 char	*join_free(char *buffer, char *buf)
 {
 	char	*join;
@@ -72,6 +74,7 @@ char	*join_free(char *buffer, char *buf)
 	buffer = NULL;
 	return (join);
 }
+
 // fill the buf
 char	*read_buff(int fd, char *buffer)
 {
@@ -89,7 +92,6 @@ char	*read_buff(int fd, char *buffer)
 		readed = read(fd, buf, BUFFER_SIZE);
 		if (readed == -1)
 		{
-			free(buf);
 			free(buffer);
 			return (NULL);
 		}
@@ -98,16 +100,15 @@ char	*read_buff(int fd, char *buffer)
 		if (ft_strchr(buf, '\n'))
 			break ;
 	}
-	free(buf);
-	return (buffer);
+	return (free(buf), buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char *buffer;
+	static char	*buffer;
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0)
 		return (NULL);
 	buffer = read_buff(fd, buffer);
 	if (!buffer || *buffer == 0)
