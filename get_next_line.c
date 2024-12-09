@@ -6,7 +6,7 @@
 /*   By: ijoubair <ijoubair@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 11:00:48 by ijoubair          #+#    #+#             */
-/*   Updated: 2024/12/08 19:36:35 by ijoubair         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:52:32 by ijoubair         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,16 @@ char	*extract_line(char *buffer)
 }
 
 //join the leftover with the new readed line
-char	*join_free(char *buffer, char *buf)
-{
-	char	*join;
+// char	*join_free(char *buffer, char *buf)
+// {
+// 	char	*join;
 
-	join = ft_strjoin(buffer, buf);
-	if(!join)
-		return (NULL);
-	free(buffer);
-	return (join);
-}
+// 	join = ft_strjoin(buffer, buf);
+// 	if(!join)
+// 		return (NULL);
+// 	free(buffer);
+// 	return (join);
+// }
 
 // fill the buf
 char	*read_buff(int fd, char *buffer)
@@ -85,8 +85,10 @@ char	*read_buff(int fd, char *buffer)
 	buf = malloc(BUFFER_SIZE * sizeof(char) + 1);
 	if (!buf)
 		return (NULL);
-	if (!buffer)
-		buffer = ft_calloc(1, 1);
+	// if (!buffer)
+	// 	buffer = ft_calloc(1, 1);
+	// if(!buffer)
+	// 	return(free(buf), NULL);
 	readed = 1;
 	while (readed > 0)
 	{
@@ -94,7 +96,8 @@ char	*read_buff(int fd, char *buffer)
 		if (readed == -1)
 			return(free(buf), NULL); 
 		buf[readed] = 0;
-		buffer = join_free(buffer, buf);
+		buffer = ft_strjoin(buffer, buf);
+		
 		if (ft_strchr(buf, '\n'))
 			break ;
 	}
@@ -106,16 +109,16 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	buffer = read_buff(fd, buffer);
-	if (!buffer || *buffer == 0)
+	if (!buffer)
+		return (NULL);
+	if (*buffer == 0)
 		return (free(buffer), NULL);
 	line = extract_line(buffer);
 	if(!line)
 		return(free(buffer), NULL);
 	buffer = get_leftover(buffer);
-	if(!buffer)
-		free(buffer);
 	return (line);
 }
