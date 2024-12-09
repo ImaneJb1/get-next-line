@@ -84,7 +84,7 @@ char	*read_buff(int fd, char *buffer)
 
 	buf = malloc(BUFFER_SIZE * sizeof(char) + 1);
 	if (!buf)
-		return (NULL);
+		return (free(buffer), NULL);
 	// if (!buffer)
 	// 	buffer = ft_calloc(1, 1);
 	// if(!buffer)
@@ -94,7 +94,7 @@ char	*read_buff(int fd, char *buffer)
 	{
 		readed = read(fd, buf, BUFFER_SIZE);
 		if (readed == -1)
-			return(free(buf), NULL); 
+			return(free(buf), free(buffer), NULL); 
 		buf[readed] = 0;
 		buffer = ft_strjoin(buffer, buf);
 		
@@ -115,10 +115,18 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	if (*buffer == 0)
-		return (free(buffer), NULL);
+	{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
 	line = extract_line(buffer);
 	if(!line)
-		return(free(buffer), NULL);
+			{
+		free(buffer);
+		buffer = NULL;
+		return (NULL);
+	}
 	buffer = get_leftover(buffer);
 	return (line);
 }
